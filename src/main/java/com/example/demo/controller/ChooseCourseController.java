@@ -30,7 +30,7 @@ public class ChooseCourseController  {
     @Autowired
     private CourseService courseService;
     @RequestMapping(value = "/courses",method = GET)
-    public String goSelectPage(HttpSession session,ModelMap map){
+    public HashMap<Course,Boolean> goSelectPage(HttpSession session){
         List<Course> courses = courseService.findAllCourses();//所有课程
         int stu_id = Integer.parseInt((String) session.getAttribute("stu_id"));
         HashMap<Course,Boolean> coursesIsSelect = new HashMap<>();
@@ -39,14 +39,13 @@ public class ChooseCourseController  {
             boolean isSelect = chooseCourseService.isChoose(stu_id,co_id);
             coursesIsSelect.put(courses.get(i),isSelect);
         }
-        map.addAttribute("coursesIsSelect",coursesIsSelect);//所有课程及其是否已选
-        return "/courses.html";//跳转到选课界面
+        return coursesIsSelect;//跳转到选课界面
     }
     @RequestMapping(value = "/select",method = POST)
-    public String selectCourse(@RequestParam("course_id") String course_id , HttpSession session){
+    public boolean selectCourse(@RequestParam("course_id") String course_id , HttpSession session){
         int stu_id = Integer.parseInt((String) session.getAttribute("stu_id"));
-        studentService.select(stu_id,Integer.parseInt(course_id));//添加选课记录
-        return "redirect:/courses";
+
+        return studentService.select(stu_id,Integer.parseInt(course_id));//添加选课记录;
     }
 
 }

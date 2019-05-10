@@ -24,14 +24,14 @@ public class LoginController {
         return "/Login.html";
     }
     @RequestMapping(value = "/login.do",method = POST)
-    public String login(@RequestParam("id") String id, @RequestParam("password") String password, HttpSession session){
+    public boolean login(@RequestParam("id") String id, @RequestParam("password") String password, HttpSession session){
         boolean login =  studentService.login(Integer.parseInt(id),password);
         if (login){
             session.setAttribute("stu_id",id);
-            return "redirect:/home";
+            return true;
         }
         else
-            return "redirect:/loginFail.html";
+            return false;
     }
 
 }

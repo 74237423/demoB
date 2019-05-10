@@ -34,18 +34,20 @@ public class StudentService {
     }
 
     //选课
-    public void select(int stu_id,int co_id){
+    public boolean select(int stu_id,int co_id){
         ChooseCourse chooseCourse = new ChooseCourse();
         chooseCourse.setCourse(courseRepository.findById(co_id));
         chooseCourse.setStudent(findStudentById(stu_id));
         chooseCourse.setDatetime(getNowTime());
 
         chooseCourseRepository.save(chooseCourse);
+        return chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id))!=null;
     }
 
     //退课
-    public void cancel(int stu_id,int co_id){
+    public boolean cancel(int stu_id,int co_id){
         chooseCourseRepository.deleteByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
+        return chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id))==null;
     }
 
     private Timestamp getNowTime(){
