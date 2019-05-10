@@ -32,8 +32,7 @@ public class HomeController {
     @Autowired
     private CourseService courseService;
     @RequestMapping(value = "/home",method = GET)
-    public List<Course> toHome(HttpSession session){
-        String stu_id = (String) session.getAttribute("stu_id");
+    public List<Course> toHome(@RequestParam("stu_id") String stu_id){
         int id = Integer.parseInt(stu_id);
         List<ChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(id);
         List<Course> hasChosenCourses = new ArrayList<>();
@@ -45,9 +44,8 @@ public class HomeController {
         return hasChosenCourses;//跳转到系统主页，主页显示显示已选课程列表
     }
     @RequestMapping(value = "/cancle",method = POST)
-    public boolean dropCourse(@RequestParam("course_id") String course_id ,HttpSession session){
-        String stu_id = (String) session.getAttribute("stu_id");
-        int id = Integer.parseInt(stu_id);
-        return studentService.cancel(id,Integer.parseInt(course_id));//删除选课记录;
+    public boolean dropCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
+        int student_id = Integer.parseInt(stu_id);
+        return studentService.cancel(student_id,Integer.parseInt(course_id));//删除选课记录;
     }
 }

@@ -27,7 +27,6 @@ public class LoginController {
     public boolean login(@RequestParam("id") String id, @RequestParam("password") String password, HttpSession session){
         boolean login =  studentService.login(Integer.parseInt(id),password);
         if (login){
-            session.setAttribute("stu_id",id);
             return true;
         }
         else

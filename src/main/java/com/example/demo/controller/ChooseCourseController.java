@@ -30,22 +30,22 @@ public class ChooseCourseController  {
     @Autowired
     private CourseService courseService;
     @RequestMapping(value = "/courses",method = GET)
-    public HashMap<Course,Boolean> goSelectPage(HttpSession session){
+    public HashMap<Course,Boolean> goSelectPage(@RequestParam("stu_id") String stu_id){
         List<Course> courses = courseService.findAllCourses();//所有课程
-        int stu_id = Integer.parseInt((String) session.getAttribute("stu_id"));
+        int student_id = Integer.parseInt(stu_id);
         HashMap<Course,Boolean> coursesIsSelect = new HashMap<>();
         for (int i=0;i<courses.size();i++){
             int co_id = courses.get(i).getId();
-            boolean isSelect = chooseCourseService.isChoose(stu_id,co_id);
+            boolean isSelect = chooseCourseService.isChoose(student_id,co_id);
             coursesIsSelect.put(courses.get(i),isSelect);
         }
         return coursesIsSelect;//跳转到选课界面
     }
     @RequestMapping(value = "/select",method = POST)
-    public boolean selectCourse(@RequestParam("course_id") String course_id , HttpSession session){
-        int stu_id = Integer.parseInt((String) session.getAttribute("stu_id"));
+    public boolean selectCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
+        int student_id = Integer.parseInt(stu_id);
 
-        return studentService.select(stu_id,Integer.parseInt(course_id));//添加选课记录;
+        return studentService.select(student_id,Integer.parseInt(course_id));//添加选课记录;
     }
 
 }
