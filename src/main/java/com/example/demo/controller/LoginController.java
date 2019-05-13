@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class LoginController {
     @Autowired
     private StudentService studentService;
-    @RequestMapping("/login")
+    @RequestMapping("/")
     public String toLoginPage(){
         return "/login.html";
     }
@@ -23,7 +24,7 @@ public class LoginController {
     public String returnLoginPage(){
         return "/login.html";
     }
-    @RequestMapping(value = "/login.do",method = POST)
+    @RequestMapping(value = "/login",method = POST)
     @ResponseBody
     public boolean login(@RequestParam("id") String id, @RequestParam("password") String password){
         boolean login =  studentService.login(Integer.parseInt(id),password);
