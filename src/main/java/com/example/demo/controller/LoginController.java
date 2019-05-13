@@ -17,11 +17,11 @@ public class LoginController {
     private StudentService studentService;
     @RequestMapping("/login")
     public String toLoginPage(){
-        return "/Login.html";
+        return "/login.html";
     }
     @RequestMapping("/logout")
     public String returnLoginPage(){
-        return "/Login.html";
+        return "/login.html";
     }
     @RequestMapping(value = "/login.do",method = POST)
     public boolean login(@RequestParam("id") String id, @RequestParam("password") String password, HttpSession session){

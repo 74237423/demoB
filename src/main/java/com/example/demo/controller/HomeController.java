@@ -31,6 +31,13 @@ public class HomeController {
     private MajorService majorService;
     @Autowired
     private CourseService courseService;
+
+
+    @RequestMapping(value = "/coursepage",method = GET)
+    public String toCourse(){
+        return "/course-page.html";
+    }
+
     @RequestMapping(value = "/home",method = GET)
     public List<Course> toHome(@RequestParam("stu_id") String stu_id){
         int id = Integer.parseInt(stu_id);
