@@ -31,7 +31,7 @@
   }
   
   
-  function addCourseRow(courseId, courseName, tbody, btnText, onclick) {
+  function addCourseRow(courseId, courseName, tbody, btnText, onclick, disabled) {
     let row = tbody.insertRow(-1);
     let cell1 = row.insertCell(-1);
     let cell2 = row.insertCell(-1);
@@ -42,6 +42,8 @@
     btn.innerText = btnText;
     
     btn.addEventListener('click', onclick, false);
+
+    btn.disabled = disabled;
   
     cell1.appendChild(id);
     cell2.appendChild(name);
@@ -51,11 +53,11 @@
   
   function toggleBtn(tbody, disabled, courseId) {
     let rows = allCoursesTBody.rows;
-  
+
     for (let row of rows) {
       let td = row.firstChild,
-          id = td.innerText;
-    
+          id = parseInt(td.innerText);
+
       if (id === courseId) {
         let btn = row.children[2].firstChild;
         btn.disabled = disabled;
@@ -66,15 +68,10 @@
   
   
   function chooseCourse(courseId, courseName) {
-    axios.get('/select', {
-          params: {
-            course_id: courseId,
-            stu_id: stuId
-          }
-        })
+    axios.get('/select?stu_id=' + stuId + '&course_id=' + courseId)
         .then(function (response) {
           if (Boolean(response.data)) {
-            addCourseRow(courseId, courseName, myCoursesTBody, '退选', removeCourse.bind(this, courseId));
+            addCourseRow(courseId, courseName, myCoursesTBody, '退选', removeCourse.bind(this, courseId), false);
   
             toggleBtn(allCoursesTBody, true, courseId);
           } else {
@@ -88,20 +85,15 @@
   }
   
   function removeCourse(courseId) {
-    axios.get('/cancle', {
-          params: {
-            course_id: courseId,
-            stu_id: stuId
-          }
-        })
+    axios.get('/cancle?course_id=' + courseId + '&stu_id=' + stuId)
         .then(function (response) {
-          if (Boolean(response.data)) {
+          if (response.data) {
             // 删除已选课程列表中的这一行
             let rows = myCoursesTBody.rows;
-  
+
             for (let row of rows) {
               let td = row.firstChild,
-                  id = td.innerText;
+                  id = parseInt(td.innerText);
     
               if (id === courseId) {
                 row.remove();
@@ -121,35 +113,30 @@
         });
   }
 
-  console.log(stuId);
-  // axios.get('/home', {
-  //       params: {
-  //         stu_id: stuId
-  //       }
-  //     })
-  //     .then(function (response) {
-  //       for (let course of response.data) {
-  //         addCourseRow(course.id, course.name, myCoursesTBody, '退选',
-  //             removeCourse.bind(this, course.id));
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       alert('网络错误');
-  //       console.log(error);
-  //     });
-  //
-  // axios.get('/courses')
-  //     .then(function (response) {
-  //       let allCourses = response.data;
-  //       for (let course in allCourses) {
-  //         addCourseRow(course.id, course.name, allCoursesTBody, '选择',
-  //             chooseCourse.bind(this, course.id, course.name));
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       alert('网络错误');
-  //       console.log(error);
-  //     });
+  axios.get('/home?stu_id=' + stuId)
+      .then(function (response) {
+        for (let course of response.data) {
+          addCourseRow(course.id, course.name, myCoursesTBody, '退选',
+              removeCourse.bind(this, course.id), false);
+        }
+      })
+      .catch(function (error) {
+        alert('网络错误');
+        console.log(error);
+      });
+
+  axios.get('/courses?stu_id=' + stuId)
+      .then(function (response) {
+        let allCourses = response.data;
+        for (let course of allCourses) {
+          addCourseRow(course.course.id, course.course.name, allCoursesTBody, '选择',
+              chooseCourse.bind(this, course.course.id, course.course.name), course.select);
+        }
+      })
+      .catch(function (error) {
+        alert('网络错误');
+        console.log(error);
+      });
   
   
 })();

@@ -52,7 +52,7 @@ public class HomeController {
 
         return hasChosenCourses;//跳转到系统主页，主页显示显示已选课程列表
     }
-    @RequestMapping(value = "/cancle",method = POST)
+    @RequestMapping(value = "/cancle",method = GET)
     @ResponseBody
     public boolean dropCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
         int student_id = Integer.parseInt(stu_id);

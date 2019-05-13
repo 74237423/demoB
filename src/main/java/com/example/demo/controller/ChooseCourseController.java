@@ -45,7 +45,7 @@ public class ChooseCourseController  {
         }
         return courseIsSelect;//跳转到选课界面
     }
-    @RequestMapping(value = "/select",method = POST)
+    @RequestMapping(value = "/select",method = GET)
     @ResponseBody
     public boolean selectCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
         int student_id = Integer.parseInt(stu_id);
