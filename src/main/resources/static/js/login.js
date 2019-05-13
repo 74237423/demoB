@@ -12,7 +12,8 @@
           password: password
       }).then(function (response) {
           if (response.data) {
-              window.location = '/coursepage?stuId=' + id;
+            console.log(response.data);
+            window.location = '/coursepage?stuId=' + id;
           }
 
       }).catch(function (error) {

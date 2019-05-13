@@ -120,35 +120,36 @@
           console.log(error);
         });
   }
-  
-  axios.get('/home', {
-        params: {
-          stu_id: stuId
-        }
-      })
-      .then(function (response) {
-        for (let course of response.data) {
-          addCourseRow(course.id, course.name, myCoursesTBody, '退选',
-              removeCourse.bind(this, course.id));
-        }
-      })
-      .catch(function (error) {
-        alert('网络错误');
-        console.log(error);
-      });
-  
-  axios.get('/courses')
-      .then(function (response) {
-        let allCourses = response.data;
-        for (let course in allCourses) {
-          addCourseRow(course.id, course.name, allCoursesTBody, '选择',
-              chooseCourse.bind(this, course.id, course.name));
-        }
-      })
-      .catch(function (error) {
-        alert('网络错误');
-        console.log(error);
-      });
+
+  console.log(stuId);
+  // axios.get('/home', {
+  //       params: {
+  //         stu_id: stuId
+  //       }
+  //     })
+  //     .then(function (response) {
+  //       for (let course of response.data) {
+  //         addCourseRow(course.id, course.name, myCoursesTBody, '退选',
+  //             removeCourse.bind(this, course.id));
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       alert('网络错误');
+  //       console.log(error);
+  //     });
+  //
+  // axios.get('/courses')
+  //     .then(function (response) {
+  //       let allCourses = response.data;
+  //       for (let course in allCourses) {
+  //         addCourseRow(course.id, course.name, allCoursesTBody, '选择',
+  //             chooseCourse.bind(this, course.id, course.name));
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       alert('网络错误');
+  //       console.log(error);
+  //     });
   
   
 })();
