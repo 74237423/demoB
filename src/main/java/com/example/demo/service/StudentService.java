@@ -30,7 +30,9 @@ public class StudentService {
     //登录
     public boolean login(int id,String ps) {
         Student student = findStudentById(id);
-        return !student.equals(null) && student.getPassword().equals(ps);
+        if (student==null)
+            return false;
+        return student.getPassword().equals(ps);
     }
 
     //选课

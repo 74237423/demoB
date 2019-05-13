@@ -48,4 +48,20 @@ public class DemoApplicationTests {
 		student.setMajor(major);
 		studentRepository.save(student);
 	}
+
+	@Test
+	public void test5(){
+		boolean ii= studentService.login(1,"123");
+		Assert.assertEquals(true,ii);
+	}
+	@Test
+	public void test6(){
+		boolean ii= studentService.login(1,"1234");
+		Assert.assertEquals(false,ii);
+	}
+	@Test
+	public  void test7(){
+		boolean ii= studentService.login(144,"1234");
+		Assert.assertEquals(false,ii);
+	}
 }
