@@ -5,6 +5,7 @@ import com.example.demo.service.ChooseCourseService;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.MajorService;
 import com.example.demo.service.StudentService;
+import com.example.demo.util.CourseIsSelect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,16 +34,16 @@ public class ChooseCourseController  {
     private CourseService courseService;
     @RequestMapping(value = "/courses",method = GET)
     @ResponseBody
-    public HashMap<Course,Boolean> goSelectPage(@RequestParam("stu_id") String stu_id){
+    public List<CourseIsSelect> goSelectPage(@RequestParam("stu_id") String stu_id){
         List<Course> courses = courseService.findAllCourses();//所有课程
         int student_id = Integer.parseInt(stu_id);
-        HashMap<Course,Boolean> coursesIsSelect = new HashMap<>();
+        List<CourseIsSelect> courseIsSelect= new ArrayList<>();
         for (int i=0;i<courses.size();i++){
             int co_id = courses.get(i).getId();
             boolean isSelect = chooseCourseService.isChoose(student_id,co_id);
-            coursesIsSelect.put(courses.get(i),isSelect);
+            courseIsSelect.add(new CourseIsSelect(courses.get(i),isSelect));
         }
-        return coursesIsSelect;//跳转到选课界面
+        return courseIsSelect;//跳转到选课界面
     }
     @RequestMapping(value = "/select",method = POST)
     @ResponseBody

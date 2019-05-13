@@ -4,6 +4,7 @@ import com.example.demo.entity.Course;
 import com.example.demo.entity.Major;
 import com.example.demo.entity.Student;
 import com.example.demo.repository.StudentRepository;
+import com.example.demo.service.ChooseCourseService;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.StudentService;
 import org.junit.Assert;
@@ -64,4 +65,5 @@ public class DemoApplicationTests {
 		boolean ii= studentService.login(144,"1234");
 		Assert.assertEquals(false,ii);
 	}
+
 }
