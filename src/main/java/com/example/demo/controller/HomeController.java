@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,6 +40,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/home",method = GET)
+    @ResponseBody
     public List<Course> toHome(@RequestParam("stu_id") String stu_id){
         int id = Integer.parseInt(stu_id);
         List<ChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(id);
@@ -51,6 +53,7 @@ public class HomeController {
         return hasChosenCourses;//跳转到系统主页，主页显示显示已选课程列表
     }
     @RequestMapping(value = "/cancle",method = POST)
+    @ResponseBody
     public boolean dropCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
         int student_id = Integer.parseInt(stu_id);
         return studentService.cancel(student_id,Integer.parseInt(course_id));//删除选课记录;

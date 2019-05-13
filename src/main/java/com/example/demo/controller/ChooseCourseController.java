@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,7 @@ public class ChooseCourseController  {
     @Autowired
     private CourseService courseService;
     @RequestMapping(value = "/courses",method = GET)
+    @ResponseBody
     public HashMap<Course,Boolean> goSelectPage(@RequestParam("stu_id") String stu_id){
         List<Course> courses = courseService.findAllCourses();//所有课程
         int student_id = Integer.parseInt(stu_id);
@@ -42,6 +44,7 @@ public class ChooseCourseController  {
         return coursesIsSelect;//跳转到选课界面
     }
     @RequestMapping(value = "/select",method = POST)
+    @ResponseBody
     public boolean selectCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
         int student_id = Integer.parseInt(stu_id);
 

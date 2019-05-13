@@ -24,6 +24,7 @@ public class LoginController {
         return "/login.html";
     }
     @RequestMapping(value = "/login.do",method = POST)
+    @ResponseBody
     public boolean login(@RequestParam("id") String id, @RequestParam("password") String password){
         boolean login =  studentService.login(Integer.parseInt(id),password);
         if (login){
