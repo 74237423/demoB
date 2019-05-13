@@ -43,13 +43,15 @@ public class StudentService {
         chooseCourse.setDatetime(getNowTime());
 
         chooseCourseRepository.save(chooseCourse);
-        return chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id))!=null;
+        List<ChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
+        return chooseCourses.size() != 0;
     }
 
     //退课
     public boolean cancel(int stu_id,int co_id){
         chooseCourseRepository.deleteByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
-        return chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id))==null;
+        List<ChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
+        return chooseCourses.size()==0;
     }
 
     private Timestamp getNowTime(){

@@ -17,7 +17,7 @@ public interface ChooseCourseRepository extends CrudRepository<ChooseCourse,Inte
     List<ChooseCourse> findAllByCourse(Course course);
     //找出某学生的所有选课记录
     List<ChooseCourse> findAllByStudent(Student student);
-    ChooseCourse findByStudentAndCourse(Student student,Course course);
+    List<ChooseCourse> findByStudentAndCourse(Student student,Course course);
     @Modifying
     @Transactional
     void deleteByStudentAndCourse(Student student,Course course);

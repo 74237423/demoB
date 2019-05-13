@@ -1,8 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.entity.ChooseCourse;
 import com.example.demo.entity.Course;
 import com.example.demo.entity.Major;
 import com.example.demo.entity.Student;
+import com.example.demo.repository.ChooseCourseRepository;
+import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.ChooseCourseService;
 import com.example.demo.service.CourseService;
@@ -13,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,7 +31,13 @@ public class DemoApplicationTests {
 
 	@Autowired
 	CourseService courseService;
+	@Autowired
+	CourseRepository courseRepository;
 
+	@Autowired
+	private ChooseCourseRepository chooseCourseRepository;
+	@Autowired
+    private ChooseCourseService chooseCourseService;
 	@Test
 	public void contextLoads() {
 		Student student = studentService.findStudentById(2);
@@ -60,10 +71,15 @@ public class DemoApplicationTests {
 		boolean ii= studentService.login(1,"1234");
 		Assert.assertEquals(false,ii);
 	}
-	@Test
-	public  void test7(){
-		boolean ii= studentService.login(144,"1234");
-		Assert.assertEquals(false,ii);
-	}
 
+	@Test
+    public void test8(){
+	    
+	   boolean n=  chooseCourseService.isChoose(5,3);
+	   Assert.assertEquals(true,n);
+        boolean n1=  chooseCourseService.isChoose(2,3);
+        Assert.assertEquals(false,n1);
+        boolean n2=  chooseCourseService.isChoose(1,1);
+        Assert.assertEquals(true,n2);
+    }
 }

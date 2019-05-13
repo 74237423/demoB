@@ -39,6 +39,7 @@ public class ChooseCourseService {
     public boolean isChoose(int stu_id,int co_id){
         Student student = studentRepository.findById(stu_id);
         Course course = courseRepository.findById(co_id);
-        return chooseCourseRepository.findByStudentAndCourse(student, course) != null;
+        List<ChooseCourse>chooseCourses = chooseCourseRepository.findByStudentAndCourse(student, course);
+        return chooseCourses.size()!=0;
     }
 }
