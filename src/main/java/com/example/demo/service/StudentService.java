@@ -20,7 +20,7 @@ public class StudentService {
     private ChooseCourseRepository chooseCourseRepository;
     @Autowired
     private CourseRepository courseRepository;
-    public Student findStudentById(int id){
+    public Student findStudentById(String id){
         return studentRepository.findById(id);
     }
     public List<Student> findAllStudents(){
@@ -28,7 +28,7 @@ public class StudentService {
     }
 
     //登录
-    public boolean login(int id,String ps) {
+    public boolean login(String id,String ps) {
         Student student = findStudentById(id);
         if (student==null)
             return false;
@@ -36,7 +36,7 @@ public class StudentService {
     }
 
     //选课
-    public boolean select(int stu_id,int co_id){
+    public boolean select(String stu_id,int co_id){
         ChooseCourse chooseCourse = new ChooseCourse();
         chooseCourse.setCourse(courseRepository.findById(co_id));
         chooseCourse.setStudent(findStudentById(stu_id));
@@ -48,7 +48,7 @@ public class StudentService {
     }
 
     //退课
-    public boolean cancel(int stu_id,int co_id){
+    public boolean cancel(String stu_id,int co_id){
         chooseCourseRepository.deleteByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
         List<ChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
         return chooseCourses.size()==0;

@@ -42,8 +42,8 @@ public class HomeController {
     @RequestMapping(value = "/home",method = GET)
     @ResponseBody
     public List<Course> toHome(@RequestParam("stu_id") String stu_id){
-        int id = Integer.parseInt(stu_id);
-        List<ChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(id);
+
+        List<ChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(stu_id);
         List<Course> hasChosenCourses = new ArrayList<>();
         for (int i=0;i<chooseCourseList.size();i++){
             Course course = chooseCourseList.get(i).getCourse();
@@ -55,7 +55,6 @@ public class HomeController {
     @RequestMapping(value = "/cancle",method = GET)
     @ResponseBody
     public boolean dropCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
-        int student_id = Integer.parseInt(stu_id);
-        return studentService.cancel(student_id,Integer.parseInt(course_id));//删除选课记录;
+        return studentService.cancel(stu_id,Integer.parseInt(course_id));//删除选课记录;
     }
 }

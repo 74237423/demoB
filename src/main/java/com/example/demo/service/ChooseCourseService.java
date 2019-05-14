@@ -26,7 +26,7 @@ public class ChooseCourseService {
     public List<ChooseCourse> findAllChoose(){
         return chooseCourseRepository.findAll();
     }
-    public List<ChooseCourse> findAllChooseByStu(int stu_id){
+    public List<ChooseCourse> findAllChooseByStu(String stu_id){
         Student student = studentRepository.findById(stu_id);
         return chooseCourseRepository.findAllByStudent(student);
     }
@@ -36,7 +36,7 @@ public class ChooseCourseService {
         return chooseCourseRepository.findAllByCourse(course);
     }
 
-    public boolean isChoose(int stu_id,int co_id){
+    public boolean isChoose(String stu_id,int co_id){
         Student student = studentRepository.findById(stu_id);
         Course course = courseRepository.findById(co_id);
         List<ChooseCourse>chooseCourses = chooseCourseRepository.findByStudentAndCourse(student, course);

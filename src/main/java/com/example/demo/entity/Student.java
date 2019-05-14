@@ -9,19 +9,18 @@ public class Student implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
     @ManyToOne
     private Major major;
     private String name;
     private String password;
     @OneToMany(mappedBy = "student")
     List<ChooseCourse> chooseCourses;
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

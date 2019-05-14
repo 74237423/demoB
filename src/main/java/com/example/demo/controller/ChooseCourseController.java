@@ -36,11 +36,11 @@ public class ChooseCourseController  {
     @ResponseBody
     public List<CourseIsSelect> goSelectPage(@RequestParam("stu_id") String stu_id){
         List<Course> courses = courseService.findAllCourses();//所有课程
-        int student_id = Integer.parseInt(stu_id);
+
         List<CourseIsSelect> courseIsSelect= new ArrayList<>();
         for (int i=0;i<courses.size();i++){
             int co_id = courses.get(i).getId();
-            boolean isSelect = chooseCourseService.isChoose(student_id,co_id);
+            boolean isSelect = chooseCourseService.isChoose(stu_id,co_id);
             courseIsSelect.add(new CourseIsSelect(courses.get(i),isSelect));
         }
         return courseIsSelect;//跳转到选课界面
@@ -48,9 +48,8 @@ public class ChooseCourseController  {
     @RequestMapping(value = "/select",method = GET)
     @ResponseBody
     public boolean selectCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
-        int student_id = Integer.parseInt(stu_id);
 
-        return studentService.select(student_id,Integer.parseInt(course_id));//添加选课记录;
+        return studentService.select(stu_id,Integer.parseInt(course_id));//添加选课记录;
     }
 
 }
