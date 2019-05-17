@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ChooseCourse;
-import com.example.demo.entity.Course;
-import com.example.demo.entity.Student;
+import com.example.demo.entity.*;
 import com.example.demo.repository.ChooseCourseRepository;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.StudentRepository;
@@ -20,26 +18,26 @@ public class ChooseCourseService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public ChooseCourse findChooseById(int id){
+    public BChooseCourse findChooseById(int id){
         return chooseCourseRepository.findById(id);
     }
-    public List<ChooseCourse> findAllChoose(){
+    public List<BChooseCourse> findAllChoose(){
         return chooseCourseRepository.findAll();
     }
-    public List<ChooseCourse> findAllChooseByStu(String stu_id){
-        Student student = studentRepository.findById(stu_id);
+    public List<BChooseCourse> findAllChooseByStu(String stu_id){
+        BStudent student = studentRepository.findById(stu_id);
         return chooseCourseRepository.findAllByStudent(student);
     }
 
-    public List<ChooseCourse> findAllChooseByCourse(int co_id){
-        Course course = courseRepository.findById(co_id);
+    public List<BChooseCourse> findAllChooseByCourse(String co_id){
+        BCourse course = courseRepository.findById(co_id);
         return chooseCourseRepository.findAllByCourse(course);
     }
 
-    public boolean isChoose(String stu_id,int co_id){
-        Student student = studentRepository.findById(stu_id);
-        Course course = courseRepository.findById(co_id);
-        List<ChooseCourse>chooseCourses = chooseCourseRepository.findByStudentAndCourse(student, course);
+    public boolean isChoose(String stu_id,String co_id){
+        BStudent student = studentRepository.findById(stu_id);
+        BCourse course = courseRepository.findById(co_id);
+        List<BChooseCourse>chooseCourses = chooseCourseRepository.findByStudentAndCourse(student, course);
         return chooseCourses.size()!=0;
     }
 }

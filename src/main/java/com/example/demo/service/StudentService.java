@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ChooseCourse;
-import com.example.demo.entity.Course;
-import com.example.demo.entity.Student;
+import com.example.demo.entity.BChooseCourse;
+import com.example.demo.entity.BCourse;
+import com.example.demo.entity.BStudent;
 import com.example.demo.repository.ChooseCourseRepository;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.StudentRepository;
@@ -20,41 +20,37 @@ public class StudentService {
     private ChooseCourseRepository chooseCourseRepository;
     @Autowired
     private CourseRepository courseRepository;
-    public Student findStudentById(String id){
+    public BStudent findStudentById(String id){
         return studentRepository.findById(id);
     }
-    public List<Student> findAllStudents(){
+    public List<BStudent> findAllStudents(){
         return studentRepository.findAll();
     }
 
     //登录
     public boolean login(String id,String ps) {
-        Student student = findStudentById(id);
+        BStudent student = findStudentById(id);
         if (student==null)
             return false;
         return student.getPassword().equals(ps);
     }
 
     //选课
-    public boolean select(String stu_id,int co_id){
-        ChooseCourse chooseCourse = new ChooseCourse();
+    public boolean select(String stu_id,String co_id){
+        BChooseCourse chooseCourse = new BChooseCourse();
         chooseCourse.setCourse(courseRepository.findById(co_id));
         chooseCourse.setStudent(findStudentById(stu_id));
-        chooseCourse.setDatetime(getNowTime());
 
         chooseCourseRepository.save(chooseCourse);
-        List<ChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
+        List<BChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
         return chooseCourses.size() != 0;
     }
 
     //退课
-    public boolean cancel(String stu_id,int co_id){
+    public boolean cancel(String stu_id,String co_id){
         chooseCourseRepository.deleteByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
-        List<ChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
+        List<BChooseCourse> chooseCourses = chooseCourseRepository.findByStudentAndCourse(findStudentById(stu_id),courseRepository.findById(co_id));
         return chooseCourses.size()==0;
     }
 
-    private Timestamp getNowTime(){
-        return new Timestamp(System.currentTimeMillis());
-    }
 }
