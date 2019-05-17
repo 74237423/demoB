@@ -56,9 +56,9 @@
 
     for (let row of rows) {
       let td = row.firstChild,
-          id = parseInt(td.innerText);
+          id = td.innerText;
 
-      if (id === courseId) {
+      if (id === courseId.toString()) {
         let btn = row.children[2].firstChild;
         btn.disabled = disabled;
         break;
@@ -93,9 +93,9 @@
 
             for (let row of rows) {
               let td = row.firstChild,
-                  id = parseInt(td.innerText);
+                  id = td.innerText;
     
-              if (id === courseId) {
+              if (id === courseId.toString()) {
                 row.remove();
                 break;
               }
