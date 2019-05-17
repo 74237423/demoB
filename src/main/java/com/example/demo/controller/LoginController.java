@@ -27,7 +27,7 @@ public class LoginController {
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody
     public boolean login(@RequestParam("id") String id, @RequestParam("password") String password){
-        boolean login =  studentService.login(Integer.parseInt(id),password);
+        boolean login =  studentService.login(id,password);
         if (login){
             return true;
         }

@@ -1,11 +1,11 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Course;
+import com.example.demo.entity.BCourse;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface CourseRepository extends CrudRepository<Course,Integer> {
-    Course findById(int id);
-    List<Course> findAll();
+public interface CourseRepository extends CrudRepository<BCourse,Integer> {
+    BCourse findById(String id);
+    List<BCourse> findAll();
 }

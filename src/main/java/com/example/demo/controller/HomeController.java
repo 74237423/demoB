@@ -1,26 +1,19 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ChooseCourse;
-import com.example.demo.entity.Course;
-import com.example.demo.entity.Student;
+import com.example.demo.entity.*;
 import com.example.demo.service.ChooseCourseService;
 import com.example.demo.service.CourseService;
-import com.example.demo.service.MajorService;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class HomeController {
@@ -28,8 +21,6 @@ public class HomeController {
     private ChooseCourseService chooseCourseService;
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private MajorService majorService;
     @Autowired
     private CourseService courseService;
 
@@ -41,12 +32,12 @@ public class HomeController {
 
     @RequestMapping(value = "/home",method = GET)
     @ResponseBody
-    public List<Course> toHome(@RequestParam("stu_id") String stu_id){
-        int id = Integer.parseInt(stu_id);
-        List<ChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(id);
-        List<Course> hasChosenCourses = new ArrayList<>();
+    public List<BCourse> toHome(@RequestParam("stu_id") String stu_id){
+
+        List<BChooseCourse> chooseCourseList = chooseCourseService.findAllChooseByStu(stu_id);
+        List<BCourse> hasChosenCourses = new ArrayList<>();
         for (int i=0;i<chooseCourseList.size();i++){
-            Course course = chooseCourseList.get(i).getCourse();
+            BCourse course = chooseCourseList.get(i).getCourse();
             hasChosenCourses.add(course);
         }
 
@@ -55,7 +46,6 @@ public class HomeController {
     @RequestMapping(value = "/cancle",method = GET)
     @ResponseBody
     public boolean dropCourse(@RequestParam("course_id") String course_id ,@RequestParam("stu_id") String stu_id ){
-        int student_id = Integer.parseInt(stu_id);
-        return studentService.cancel(student_id,Integer.parseInt(course_id));//删除选课记录;
+        return studentService.cancel(stu_id,course_id);//删除选课记录;
     }
 }

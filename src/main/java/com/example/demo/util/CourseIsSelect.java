@@ -1,15 +1,15 @@
 package com.example.demo.util;
 
-import com.example.demo.entity.Course;
+import com.example.demo.entity.BCourse;
 
 public class CourseIsSelect {
-    private Course course;
+    private BCourse course;
 
-    public Course getCourse() {
+    public BCourse getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(BCourse course) {
         this.course = course;
     }
 
@@ -22,7 +22,7 @@ public class CourseIsSelect {
     }
 
     private boolean isSelect;
-    public CourseIsSelect(Course course,boolean isSelect){
+    public CourseIsSelect(BCourse course,boolean isSelect){
         this.course=course;
         this.isSelect=isSelect;
     }
