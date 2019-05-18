@@ -6,18 +6,17 @@ import java.io.Serializable;
 @Entity
 public class BChooseCourse implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
     @ManyToOne
     private BStudent student;
     @ManyToOne
     private BCourse course;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,10 +36,21 @@ public class StudentService {
             return false;
         return student.getPassword().equals(ps);
     }
+    private String createOrdercheckId(){
+        String id="";
+        //获取当前时间戳
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String temp = sf.format(new Date());
+        //获取随机数
+        int random=(int) ((Math.random()+1)*1000);
+        id=temp+random;
+        return id;
 
+    }
     //选课
     public boolean select(String stu_id,String co_id){
         BChooseCourse chooseCourse = new BChooseCourse();
+        chooseCourse.setId(createOrdercheckId());
         chooseCourse.setCourse(courseRepository.findById(co_id));
         chooseCourse.setStudent(findStudentById(stu_id));
 

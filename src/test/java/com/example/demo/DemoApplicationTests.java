@@ -38,9 +38,13 @@ public class DemoApplicationTests {
     private ChooseCourseService chooseCourseService;
 	@Test
 	public void contextLoads() {
-		BStudent student = studentService.findStudentById("3");
-		Assert.assertEquals(null,student);
+		BStudent student = studentService.findStudentById("B0001");
+		Assert.assertEquals("123",student.getPassword());
 
+	}
+	@Test
+	public void fefh(){
+		Assert.assertEquals(true,studentService.select("B0003","B0004"));
 	}
 
 
